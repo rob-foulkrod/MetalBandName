@@ -23,7 +23,6 @@ from your own repository.
 - **Module:** Configure and use secret scanning in your GitHub repository
 - **Learning Path:** GitHub Advanced Security Part 1 of 2
 - **Lab URL:** <https://github.com/skills/introduction-to-secret-scanning>
-- **Source:** View on Microsoft Learn
 
 ## Lab 3: Exercise — Configure Dependabot security updates
 
