@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using MetalBandName.Models;
 using MetalBandName.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MetalBandName.Controllers;
 
@@ -44,6 +44,11 @@ public class HomeController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Move(int id, TodoStatus status)
     {
+        if (!ModelState.IsValid || !Enum.IsDefined(status))
+        {
+            return BadRequest();
+        }
+
         if (!todoStore.Move(id, status))
         {
             return NotFound();
