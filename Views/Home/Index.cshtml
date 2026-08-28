@@ -1,0 +1,30 @@
+﻿@model KanbanBoardViewModel
+@{
+    ViewData["Title"] = "The Setlist";
+}
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">MetalBandName presents</p>
+        <h1>The Setlist</h1>
+        <p class="hero-copy">Turn loose ideas into a finished encore. One heavy task at a time.</p>
+    </div>
+    <form asp-action="Add" method="post" class="task-form">
+        <label for="title">Add to the setlist</label>
+        <div class="input-row">
+            <input id="title" name="title" maxlength="120" required placeholder="What needs to happen?" autocomplete="off" />
+            <button type="submit">Add task <span aria-hidden="true">+</span></button>
+        </div>
+    </form>
+</section>
+
+@if (TempData["Error"] is string error)
+{
+    <p class="validation-message" role="alert">@error</p>
+}
+
+<section class="board" aria-label="Task board">
+    @await Html.PartialAsync("_KanbanColumn", (Model.Backlog, TodoStatus.Backlog, "Backlog", "Ideas waiting in the wings"))
+    @await Html.PartialAsync("_KanbanColumn", (Model.InProgress, TodoStatus.InProgress, "In progress", "Currently making noise"))
+    @await Html.PartialAsync("_KanbanColumn", (Model.Done, TodoStatus.Done, "Done", "Ready for the encore"))
+</section>

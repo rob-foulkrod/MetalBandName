@@ -1,0 +1,42 @@
+@model (IReadOnlyList<TodoItem> Items, TodoStatus Status, string Name, string Description)
+
+<article class="kanban-column @Model.Status.ToString().ToLowerInvariant()">
+    <header>
+        <div>
+            <p class="column-label">@Model.Description</p>
+            <h2>@Model.Name</h2>
+        </div>
+        <span class="count">@Model.Items.Count</span>
+    </header>
+    <div class="cards">
+        @foreach (var item in Model.Items)
+        {
+            <div class="task-card">
+                <span class="task-id">TRACK @item.Id.ToString("D2")</span>
+                <p>@item.Title</p>
+                <div class="card-actions">
+                    @if (item.Status != TodoStatus.Backlog)
+                    {
+                        <form asp-action="Move" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="status" value="@((int)item.Status - 1)" />
+                            <button type="submit" aria-label="Move @item.Title back">←</button>
+                        </form>
+                    }
+                    @if (item.Status != TodoStatus.Done)
+                    {
+                        <form asp-action="Move" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="hidden" name="status" value="@((int)item.Status + 1)" />
+                            <button type="submit" aria-label="Move @item.Title forward">→</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        }
+        @if (!Model.Items.Any())
+        {
+            <p class="empty-state">Nothing here yet. The stage is yours.</p>
+        }
+    </div>
+</article>
