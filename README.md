@@ -4,7 +4,7 @@ A Kanban-inspired ASP.NET Core MVC TODO application.
 
 ## Run
 
-```sh
+```pwsh
 dotnet run
 ```
 
